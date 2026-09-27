@@ -17,8 +17,8 @@ function division(a, b) {
 }
 
 let operateur = false;
-let nombreA = 0;
-let nombreB = 0;
+let nombreA = null;
+let nombreB = null;
 
 function calculer(a, b, operateur) {
     switch (operateur) {
@@ -29,7 +29,11 @@ function calculer(a, b, operateur) {
         case "×":
             return multiplication(a, b);
         case "÷":
-            return division(a, b);
+            if (b == 0) {
+                alert("Ceci est impossible...");
+            } else {
+                return division(a, b);
+            }
     }
 }
 
@@ -38,30 +42,64 @@ const ecran = document.querySelector(".ecran span");
 
 function clicChiffre(chiffre) {
     if (operateur) { // si c'est le second nombre
+        if (!nombreB) {
+            nombreB = 0;
+        }
         nombreB = nombreB * 10 + chiffre;
         ecran.textContent += chiffre;
     } else { // si c'est le premier nombre
+        if (!nombreA) {
+            nombreA = 0;
+        }
         nombreA = nombreA * 10 + chiffre;
         ecran.textContent = nombreA;
     }
 }
 
 function clicOperateur(bouton) {
-    operateur = bouton;
-    ecran.textContent += operateur;
+    if (operateur && nombreB != null) {
+
+        nombreA = calculer(nombreA, nombreB, operateur);
+        if (nombreA != undefined) {
+            nombreB = 0;
+            ecran.textContent = String(nombreA).length > 6 ? nombreA.toPrecision(6) : nombreA;
+            operateur = bouton;
+            ecran.textContent += operateur;
+        } else {
+            clicEffacer();
+        }
+
+    } else if (operateur) {
+        operateur = bouton;
+        ecran.textContent = ecran.textContent.slice(0, -1) + operateur;
+    } else if (nombreA != null) {
+        operateur = bouton;
+        ecran.textContent += operateur;
+    } else {
+        alert("Vous devez commencer votre calcul par un chiffre !");
+    }
 }
 
 function clicEgal() {
-    ecran.textContent = calculer(nombreA, nombreB, operateur);
-    nombreA = 0;
-    nombreB = 0;
-    operateur = false;
+    if (nombreA != null && nombreB != null && operateur) {
+        let resultat = calculer(nombreA, nombreB, operateur);
+        if (resultat != undefined) {
+            ecran.textContent = String(resultat).length > 6 ? resultat.toPrecision(6) : resultat;
+        } else {
+            ecran.textContent = "";
+        }
+        nombreA = null;
+        nombreB = null;
+        operateur = false;
+    } else {
+        alert("Vous ne pouvez pas calculer un résultat sans taper votre calcul avant !");
+    }
 }
 
 function clicEffacer() {
     ecran.textContent = "";
-    nombreA = 0;
-    nombreB = 0;
+    nombreA = null;
+    nombreB = null;
     operateur = false;
 }
 

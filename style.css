@@ -11,6 +11,8 @@ body {
     font-family: "Bitcount Single", system-ui;
     font-size: 5em;
     height: 96px;
+    overflow: auto;
+    text-wrap-mode: nowrap;
 }
 
 .boutons {
