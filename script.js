@@ -135,6 +135,33 @@ function clicVirgule() { // ajoute un . et entre en mode "virgule activée"
     }
 }
 
+function clicRetour() {
+    if (!operateur && nombreA != null) { // (1)
+        if (ecran.textContent.charAt(ecran.textContent.length - 1) == ".") {
+            virguleNombreA = false;
+        }
+        nombreA = String(nombreA).slice(0, -1);
+        if (nombreA.length == 0) {
+            nombreA = null;
+        }
+        ecran.textContent = nombreA;
+    } else if (operateur && nombreB == null) { // (1+)
+        operateur = false;
+        ecran.textContent = nombreA;
+    } else if (operateur && nombreB != null) { // (1+1)
+        if (ecran.textContent.charAt(ecran.textContent.length - 1) == ".") {
+            virguleNombreB = false;
+        }
+        nombreB = String(nombreB).slice(0, -1);
+        if (nombreB.length == 0) {
+            nombreB = null;
+            ecran.textContent = nombreA + operateur;
+        } else {
+            ecran.textContent = nombreA + operateur + nombreB;
+        }
+    }
+}
+
 boutons.addEventListener("click", (e) => {
 
     if (e.target.getAttribute("class") == "boutonChiffre") { // si on clique sur un chiffre
@@ -147,6 +174,8 @@ boutons.addEventListener("click", (e) => {
         clicEffacer();
     } else if (e.target.getAttribute("class") == "boutonVirgule") { // si on clique sur la virgule
         clicVirgule();
+    } else if (e.target.getAttribute("class") == "boutonRetour") { // si on clique sur retour
+        clicRetour()
     }
 
 });
