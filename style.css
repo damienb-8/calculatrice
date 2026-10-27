@@ -22,7 +22,7 @@ body {
 }
 
 button {
-    font-family: "Inter", sans-serif;
+    font-family: "Quicksand", sans-serif;
     font-size: 1.6em;
     width: 141px;
     height: 70px;
@@ -44,4 +44,18 @@ button:active {
     top: 6px;
     left: -6px;
     background: darkgrey;
+}
+
+a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.odin {
+    margin-top: 8px;
+}
+
+.github {
+    margin-top: 16px;
 }
