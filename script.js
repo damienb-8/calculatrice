@@ -45,8 +45,6 @@ function calculer(a, b, operateur) {
 
 function arrondir(nombre) {
     if (nombre != null) {
-        console.log(nombre);
-        console.log(typeof nombre);
         return Number(nombre.toPrecision(6));
     }
     return null;
@@ -81,8 +79,7 @@ function clicOperateur(bouton) {
             nombreB = null;
             virguleNombreB = false;
             operateur = bouton;
-            ecran.textContent = nombreA;
-            ecran.textContent += operateur;
+            ecran.textContent = nombreA + operateur;
         }
 
     } else if (operateur) { // si on a un nombre et un opérateur (1+)
@@ -98,11 +95,10 @@ function clicOperateur(bouton) {
 }
 
 function clicEgal() {
-    if (operateur && nombreB != null) {
+    if (nombreB != null) {
         let resultat = arrondir(calculer(nombreA, nombreB, operateur));
         if (resultat != null) {
-            let resultatArrondi = resultat;
-            ecran.textContent = resultatArrondi;
+            ecran.textContent = resultat;
             nombreA = null;
             virguleNombreA = false;
             nombreB = null;
@@ -164,18 +160,25 @@ function clicRetour() {
 
 boutons.addEventListener("click", (e) => {
 
-    if (e.target.getAttribute("class") == "boutonChiffre") { // si on clique sur un chiffre
-        clicChiffre(Number(e.target.textContent));
-    } else if (e.target.getAttribute("class") == "boutonOperateur") { // si on clique sur un operateur
-        clicOperateur(e.target.textContent);
-    } else if (e.target.getAttribute("class") == "boutonEgal") { // si on clique sur égal
-        clicEgal();
-    } else if (e.target.getAttribute("class") == "boutonEffacer") { // si on clique sur effacer
-        clicEffacer();
-    } else if (e.target.getAttribute("class") == "boutonVirgule") { // si on clique sur la virgule
-        clicVirgule();
-    } else if (e.target.getAttribute("class") == "boutonRetour") { // si on clique sur retour
-        clicRetour()
+    switch (e.target.getAttribute("class")) {
+        case "boutonChiffre": // si on clique sur un chiffre
+            clicChiffre(Number(e.target.textContent));
+            break;
+        case "boutonOperateur": // si on clique sur un operateur
+            clicOperateur(e.target.textContent);
+            break;
+        case "boutonEgal": // si on clique sur égal
+            clicEgal();
+            break;
+        case "boutonEffacer": // si on clique sur effacer
+            clicEffacer();
+            break;
+        case "boutonVirgule": // si on clique sur la virgule
+            clicVirgule();
+            break;
+        case "boutonRetour": // si on clique sur retour
+            clicRetour();
+            break;
     }
 
 });
